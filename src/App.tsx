@@ -2,7 +2,50 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-function App() {
+import {
+  RecoilRoot,
+  atom,
+  useRecoilState,
+  useRecoilValue
+} from 'recoil'
+
+const textState = atom({
+  key: 'textState',
+  default: ''
+});
+
+function CharacterCounter(){
+  return (
+      <div>
+          <TextInput/>
+          <CharacterCounter/>
+      </div>
+  )
+}
+function TextInput(){
+  const [text, setText] = useRecoilState(textState);
+  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      setText(event?.target?.value);
+      // setText(event.target.value);
+  };
+  return (
+      <div>
+          <input type="text" value={text} onChange={onChange}/>
+          <br/>
+          Echo: {text}
+      </div>
+  );
+}
+
+function App(){
+  return (
+      <RecoilRoot>
+          <CharacterCounter/>
+      </RecoilRoot>
+  )
+}
+
+function App11() {
   return (
     <div className="App">
       <header className="App-header">
